@@ -1,7 +1,4 @@
 class Product:
-    """
-    Represents a product in the inventory.
-    """
 
     def __init__(
         self,
@@ -23,9 +20,6 @@ class Product:
         self.selling_price = selling_price
 
     def to_dict(self):
-        """
-        Converts the Product object into a dictionary.
-        """
 
         return {
             "id": self.id,

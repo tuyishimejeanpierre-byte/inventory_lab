@@ -19,3 +19,35 @@ class InventoryService:
                 return product
 
         return None
+    
+    def add_product(
+    self,
+    barcode,
+    product_name,
+    brand,
+    quantity,
+    buying_price,
+    selling_price
+):
+        
+        data = self.storage.load()
+
+
+        inventory = data["inventory"]
+
+
+        product = Product(
+        product_id=self.storage.generate_id(),
+        barcode=barcode,
+        product_name=product_name,
+        brand=brand,
+        quantity=quantity,
+        buying_price=buying_price,
+        selling_price=selling_price
+     )
+
+        inventory.append(product.to_dict())
+
+        self.storage.save(data)
+
+        return product.to_dict()
