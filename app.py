@@ -2,8 +2,14 @@ from flask import Flask
 
 from config import Config
 from routes.inventory_routes import inventory_bp
+from routes.external_routes import external_bp
+
+
+
 
 app = Flask(__name__)
+
+app.register_blueprint(external_bp)
 
 app.config.from_object(Config)
 

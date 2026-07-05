@@ -1,5 +1,6 @@
 from utils.json_storage import JSONStorage
 from models.product import Product
+from services.openfood_service import OpenFoodService
 
 
 class InventoryService:
@@ -68,3 +69,49 @@ def update_product(self, product_id, updates):
             return product
 
     return None
+def delete_product(self, product_id):
+
+    data = self.storage.load()
+
+    inventory = data["inventory"]
+
+    for product in inventory:
+
+        if product["id"] == product_id:
+
+            inventory.remove(product)
+
+            self.storage.save(data)
+
+            return True
+        
+
+    return False
+def import_from_openfood(self, barcode, quantity, buying_price, selling_price):
+
+    api = OpenFoodService()
+
+    product_data = api.search_by_barcode(barcode)
+
+    if not product_data:
+        return None
+
+    data = self.storage.load()
+
+    inventory = data["inventory"]
+
+    new_product = {
+        "id": self.storage.generate_id(),
+        "barcode": product_data["barcode"],
+        "product_name": product_data["product_name"],
+        "brand": product_data["brand"],
+        "quantity": quantity,
+        "buying_price": buying_price,
+        "selling_price": selling_price
+    }
+
+    inventory.append(new_product)
+
+    self.storage.save(data)
+
+    return new_product
