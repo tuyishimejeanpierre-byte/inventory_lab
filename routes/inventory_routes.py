@@ -18,3 +18,13 @@ def get_inventory():
     inventory = inventory_service.get_inventory()
 
     return jsonify(inventory), 200
+
+@inventory_bp.route("/inventory/<int:product_id>", methods=["GET"])
+def get_product(product_id):
+
+    product = inventory_service.get_product(product_id)
+
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    return jsonify(product), 200
