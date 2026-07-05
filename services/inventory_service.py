@@ -51,3 +51,20 @@ class InventoryService:
         self.storage.save(data)
 
         return product.to_dict()
+def update_product(self, product_id, updates):
+
+    data = self.storage.load()
+
+    inventory = data["inventory"]
+
+    for product in inventory:
+
+        if product["id"] == product_id:
+
+            product.update(updates)
+
+            self.storage.save(data)
+
+            return product
+
+    return None

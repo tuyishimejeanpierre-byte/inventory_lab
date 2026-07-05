@@ -43,3 +43,26 @@ def add_product():
     )
 
     return jsonify(product), 201
+@inventory_bp.route("/inventory/<int:product_id>", methods=["PATCH"])
+def update_product(product_id):
+
+    updates = request.get_json()
+
+    product = inventory_service.update_product(product_id, updates)
+
+    if product is None:
+        return jsonify({"error": "Product not found"}), 404
+
+    return jsonify(product), 200
+
+@inventory_bp.route("/inventory/<int:product_id>", methods=["DELETE"])
+def delete_product(product_id):
+
+    deleted = inventory_service.delete_product(product_id)
+
+    if not deleted:
+        return jsonify({"error": "Product not found"}), 404
+
+    return jsonify({
+        "message": "Product deleted successfully."
+    }), 200
