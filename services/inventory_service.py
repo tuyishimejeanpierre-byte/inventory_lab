@@ -5,8 +5,11 @@ from services.openfood_service import OpenFoodService
 
 class InventoryService:
 
-    def __init__(self):
-        self.storage = JSONStorage("db.json")
+
+   
+
+    def __init__(self, storage=None):
+        self.storage = storage or JSONStorage("db.json")
 
     def get_inventory(self):
         return self.storage.load()["inventory"]
@@ -52,66 +55,66 @@ class InventoryService:
         self.storage.save(data)
 
         return product.to_dict()
-def update_product(self, product_id, updates):
+    def update_product(self, product_id, updates):
 
-    data = self.storage.load()
+        data = self.storage.load()
 
-    inventory = data["inventory"]
+        inventory = data["inventory"]
 
-    for product in inventory:
+        for product in inventory:
 
-        if product["id"] == product_id:
+            if product["id"] == product_id:
 
-            product.update(updates)
+                product.update(updates)
 
-            self.storage.save(data)
+                self.storage.save(data)
 
-            return product
+                return product
 
-    return None
-def delete_product(self, product_id):
-
-    data = self.storage.load()
-
-    inventory = data["inventory"]
-
-    for product in inventory:
-
-        if product["id"] == product_id:
-
-            inventory.remove(product)
-
-            self.storage.save(data)
-
-            return True
-        
-
-    return False
-def import_from_openfood(self, barcode, quantity, buying_price, selling_price):
-
-    api = OpenFoodService()
-
-    product_data = api.search_by_barcode(barcode)
-
-    if not product_data:
         return None
+    def delete_product(self, product_id):
 
-    data = self.storage.load()
+        data = self.storage.load()
 
-    inventory = data["inventory"]
+        inventory = data["inventory"]
 
-    new_product = {
-        "id": self.storage.generate_id(),
-        "barcode": product_data["barcode"],
-        "product_name": product_data["product_name"],
-        "brand": product_data["brand"],
-        "quantity": quantity,
-        "buying_price": buying_price,
-        "selling_price": selling_price
-    }
+        for product in inventory:
 
-    inventory.append(new_product)
+            if product["id"] == product_id:
 
-    self.storage.save(data)
+                inventory.remove(product)
 
-    return new_product
+                self.storage.save(data)
+
+                return True
+            
+
+        return False
+    def import_from_openfood(self, barcode, quantity, buying_price, selling_price):
+
+        api = OpenFoodService()
+
+        product_data = api.search_by_barcode(barcode)
+
+        if not product_data:
+            return None
+
+        data = self.storage.load()
+
+        inventory = data["inventory"]
+
+        new_product = {
+            "id": self.storage.generate_id(),
+            "barcode": product_data["barcode"],
+            "product_name": product_data["product_name"],
+            "brand": product_data["brand"],
+            "quantity": quantity,
+            "buying_price": buying_price,
+            "selling_price": selling_price
+        }
+
+        inventory.append(new_product)
+
+        self.storage.save(data)
+
+        return new_product

@@ -22,7 +22,10 @@ def menu():
 
 def view_inventory():
     res = requests.get(f"{BASE_URL}/inventory")
-    print(res.json())
+    
+    data = res.json()
+    print(data)
+    return data
 
 
 def view_product():
