@@ -1,3 +1,22 @@
 {
-    "inventory": []
+    "inventory": [
+        {
+            "id": 1,
+            "barcode": "069000019832",
+            "product_name": "coca-cola",
+            "brand": "coca",
+            "quantity": 10,
+            "buying_price": 5.5,
+            "selling_price": 8.1
+        },
+        {
+            "id": 2,
+            "barcode": "01223004",
+            "product_name": "pepsi",
+            "brand": "pepsi",
+            "quantity": 15,
+            "buying_price": 6.2,
+            "selling_price": 10.0
+        }
+    ]
 }
