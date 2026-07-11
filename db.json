@@ -35,6 +35,15 @@
             "quantity": 160,
             "buying_price": 15.0,
             "selling_price": 20.0
+        },
+        {
+            "id": 5,
+            "barcode": "3760020507350",
+            "product_name": "Pur beurre de cacahu\u00e8te",
+            "brand": "Jardin Bio \u00e9tic",
+            "quantity": 15,
+            "buying_price": 20.0,
+            "selling_price": 25.0
         }
     ]
 }
