@@ -95,8 +95,46 @@ def delete_product():
 
 def search_product():
     barcode = input("Enter barcode: ")
+
     res = requests.get(f"{BASE_URL}/search?barcode={barcode}")
-    print(res.json())
+
+    if res.status_code != 200:
+        print(res.json())
+        return
+
+    product = res.json()
+
+    print("\nProduct Found")
+    print("----------------------")
+    print(f"Barcode: {product['barcode']}")
+    print(f"Name: {product['product_name']}")
+    print(f"Brand: {product['brand']}")
+    print(f"Ingredients: {product['ingredients']}")
+
+    choice = input("\nAdd this product to inventory? (y/n): ")
+
+    if choice.lower() != "y":
+        return
+
+    quantity = int(input("Quantity: "))
+    buying_price = float(input("Buying Price: "))
+    selling_price = float(input("Selling Price: "))
+
+    inventory_item = {
+        "barcode": product["barcode"],
+        "product_name": product["product_name"],
+        "brand": product["brand"],
+        "quantity": quantity,
+        "buying_price": buying_price,
+        "selling_price": selling_price
+    }
+
+    add = requests.post(
+        f"{BASE_URL}/inventory",
+        json=inventory_item
+    )
+
+    print(add.json())
 
 def main():
 
